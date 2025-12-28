@@ -42,7 +42,7 @@ export default function TiptapEditor({ content, onChange }: { content: string; o
   const editor = useEditor({
     extensions: [StarterKit, Image],
     content: content,
-    immediatelyRender: false, // <--- THIS IS THE FIX (Prevents SSR Crash)
+    immediatelyRender: false, 
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },

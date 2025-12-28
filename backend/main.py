@@ -12,7 +12,6 @@ from agent import agent_app
 
 load_dotenv()
 
-# Initialize Supabase
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
@@ -27,7 +26,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- MODELS ---
 class ArticleRequest(BaseModel):
     topic: str
     angle: str
@@ -41,27 +39,24 @@ class SaveRequest(BaseModel):
     content: str
     angle: Optional[str] = None
     status: str
-    sources: List[dict] # Structured Citation Data
-    user_id: Optional[str] = None # To track who saved it
+    sources: List[dict]
+    user_id: Optional[str] = None
 
 class ImageAnalysisRequest(BaseModel):
     image_url: str
 
-# --- ROUTES ---
 @app.get("/")
 def read_root():
     return {"message": "Nebula9 Newsroom Backend is Live"}
 
 @app.get("/articles")
 def get_articles():
-    # Fetch all articles with their current status
     response = supabase.table("articles").select("*").order("created_at", desc=True).execute()
     return response.data
 
 @app.post("/generate")
 def generate_article(request: ArticleRequest):
     try:
-        # Agent Logic: returns article content AND structured sources
         result = agent_app.invoke({
             "topic": request.topic,
             "angle": request.angle,
@@ -71,7 +66,7 @@ def generate_article(request: ArticleRequest):
         })
         return {
             "article": result["article"],
-            "sources": result["sources"] # First-class citation data
+            "sources": result["sources"]
         }
     except Exception as e:
         print(f"Generate Error: {e}")
@@ -80,16 +75,14 @@ def generate_article(request: ArticleRequest):
 @app.post("/articles")
 def save_article(request: SaveRequest):
     try:
-        # 1. Prepare Data for Main Table
         data = {
             "title": request.title,
             "content": request.content,
             "status": request.status,
-            "sources": request.sources, # Saving structured metadata
+            "sources": request.sources,
             "angle": request.angle
         }
         
-        # 2. Update or Insert Main Article
         if request.id:
             response = supabase.table("articles").update(data).eq("id", request.id).execute()
             article_id = request.id
@@ -97,15 +90,11 @@ def save_article(request: SaveRequest):
             response = supabase.table("articles").insert(data).execute()
             article_id = response.data[0]['id']
 
-        # 3. VERSION CONTROL (The new requirement)
-        # We create a snapshot of this save in the versions table
         version_data = {
             "article_id": article_id,
             "title": request.title,
             "content": request.content,
             "status": request.status,
-            # In a real app, we'd get user_id from a secure JWT token.
-            # For this MVP, we save the snapshot anonymously if not provided.
         }
         supabase.table("article_versions").insert(version_data).execute()
             

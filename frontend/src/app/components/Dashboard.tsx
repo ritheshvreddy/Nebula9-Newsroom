@@ -10,8 +10,7 @@ interface Article {
 }
 
 export default function Dashboard({ articles, onCreateNew, onEdit }: any) {
-  
-  // Helper to color-code statuses
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Approved': return 'bg-green-100 text-green-800 border-green-200';
