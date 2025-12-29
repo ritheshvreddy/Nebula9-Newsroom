@@ -21,18 +21,78 @@ const MenuBar = ({ editor }: { editor: any }) => {
 
   return (
     <div className="border-b border-gray-200 bg-gray-50 p-2 flex flex-wrap gap-1 sticky top-0 z-10">
-      <button onClick={() => editor.chain().focus().toggleBold().run()} className={getButtonClass(editor.isActive("bold"))}>Bold</button>
-      <button onClick={() => editor.chain().focus().toggleItalic().run()} className={getButtonClass(editor.isActive("italic"))}>Italic</button>
-      <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={getButtonClass(editor.isActive("heading", { level: 2 }))}>H2</button>
-      <button onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} className={getButtonClass(editor.isActive("heading", { level: 3 }))}>H3</button>
-      <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={getButtonClass(editor.isActive("bulletList"))}>• List</button>
-      <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={getButtonClass(editor.isActive("orderedList"))}>1. List</button>
-      <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={getButtonClass(editor.isActive("blockquote"))}>"Quote"</button>
-      <button onClick={addImage} className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded transition-colors">+ Image</button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleBold().run()} 
+        className={getButtonClass(editor.isActive("bold"))}
+      >
+        Bold
+      </button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleItalic().run()} 
+        className={getButtonClass(editor.isActive("italic"))}
+      >
+        Italic
+      </button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} 
+        className={getButtonClass(editor.isActive("heading", { level: 2 }))}
+      >
+        H2
+      </button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} 
+        className={getButtonClass(editor.isActive("heading", { level: 3 }))}
+      >
+        H3
+      </button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleBulletList().run()} 
+        className={getButtonClass(editor.isActive("bulletList"))}
+      >
+        • List
+      </button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleOrderedList().run()} 
+        className={getButtonClass(editor.isActive("orderedList"))}
+      >
+        1. List
+      </button>
+      <button 
+        type="button"
+        onClick={() => editor.chain().focus().toggleBlockquote().run()} 
+        className={getButtonClass(editor.isActive("blockquote"))}
+      >
+        "Quote"
+      </button>
+      <button 
+        type="button"
+        onClick={addImage} 
+        className="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded transition-colors"
+      >
+        + Image
+      </button>
       
       <div className="ml-auto flex gap-1">
-        <button onClick={() => editor.chain().focus().undo().run()} className="px-2 text-gray-400 hover:text-black">↩</button>
-        <button onClick={() => editor.chain().focus().redo().run()} className="px-2 text-gray-400 hover:text-black">↪</button>
+        <button 
+          type="button"
+          onClick={() => editor.chain().focus().undo().run()} 
+          className="px-2 text-gray-400 hover:text-black"
+        >
+          ↩
+        </button>
+        <button 
+          type="button"
+          onClick={() => editor.chain().focus().redo().run()} 
+          className="px-2 text-gray-400 hover:text-black"
+        >
+          ↪
+        </button>
       </div>
     </div>
   );
