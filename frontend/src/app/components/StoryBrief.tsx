@@ -4,8 +4,6 @@ import { useState } from "react";
 interface BriefData {
   topic: string;
   angle: string;
-  audience: string;
-  tone: string;
   word_count: string;
 }
 
@@ -13,8 +11,6 @@ export default function StoryBrief({ onGenerate, loading }: { onGenerate: (data:
   const [data, setData] = useState<BriefData>({
     topic: "",
     angle: "",
-    audience: "General Public",
-    tone: "Neutral",
     word_count: "800"
   });
 
@@ -46,48 +42,18 @@ export default function StoryBrief({ onGenerate, loading }: { onGenerate: (data:
           />
         </div>
 
-        {/* Dropdowns */}
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Audience</label>
-            <select
-              className="w-full p-3 border border-gray-300 rounded-lg"
-              value={data.audience}
-              onChange={(e) => setData({ ...data, audience: e.target.value })}
-            >
-              <option>General Public</option>
-              <option>Business / Execs</option>
-              <option>Tech / Developers</option>
-              <option>Policy Makers</option>
-            </select>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Tone</label>
-            <select
-              className="w-full p-3 border border-gray-300 rounded-lg"
-              value={data.tone}
-              onChange={(e) => setData({ ...data, tone: e.target.value })}
-            >
-              <option>Neutral</option>
-              <option>Investigative</option>
-              <option>Opinionated</option>
-              <option>Witty/Casual</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Length</label>
-            <select
-              className="w-full p-3 border border-gray-300 rounded-lg"
-              value={data.word_count}
-              onChange={(e) => setData({ ...data, word_count: e.target.value })}
-            >
-              <option value="600">Short (600)</option>
-              <option value="800">Standard (800)</option>
-              <option value="1200">Longform (1200)</option>
-            </select>
-          </div>
+        {/* Length Dropdown */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">Length</label>
+          <select
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={data.word_count}
+            onChange={(e) => setData({ ...data, word_count: e.target.value })}
+          >
+            <option value="600">Short (600)</option>
+            <option value="800">Standard (800)</option>
+            <option value="1200">Longform (1200)</option>
+          </select>
         </div>
 
         {/* Generate Button */}

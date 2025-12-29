@@ -26,11 +26,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- CHANGED: Removed audience and tone ---
 class ArticleRequest(BaseModel):
     topic: str
     angle: str
-    audience: str
-    tone: str
     word_count: str
 
 class SaveRequest(BaseModel):
@@ -57,11 +56,12 @@ def get_articles():
 @app.post("/generate")
 def generate_article(request: ArticleRequest):
     try:
+        # --- CHANGED: Hardcoded audience and tone here ---
         result = agent_app.invoke({
             "topic": request.topic,
             "angle": request.angle,
-            "audience": request.audience,
-            "tone": request.tone,
+            "audience": "General Public",
+            "tone": "Neutral",
             "word_count": request.word_count
         })
         return {

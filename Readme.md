@@ -58,7 +58,7 @@ The AI system follows a step-by-step workflow similar to a real newsroom:
 **2.Writing Agent**
 
 * Uses the research output to generate a structured article.
-* Follows the selected tone and length.
+* Follows the selected length.
 * Adds inline citations like [1], [2] linked to sources.
 
 **3.Vision Analyst**
