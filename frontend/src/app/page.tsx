@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { createClient } from "@supabase/supabase-js"; 
-import ReactMarkdown from 'react-markdown'; // Imported for Vision Text Formatting
+import ReactMarkdown from 'react-markdown'; 
 
 // Components
 import TiptapEditor from "./components/TiptapEditor";
@@ -14,6 +14,9 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
+
+// Use environment variable for API URL, fallback to localhost for development
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
 
 export default function Home() {
   // --- STATE MANAGEMENT ---
@@ -68,7 +71,7 @@ export default function Home() {
   // 2. Fetch Articles for Dashboard
   const fetchArticles = async () => {
     try {
-      const { data } = await axios.get("http://127.0.0.1:8000/articles");
+      const { data } = await axios.get(`${API_URL}/articles`);
       setArticles(data);
     } catch (e) {
       console.error("Backend offline or empty", e);
@@ -84,7 +87,7 @@ export default function Home() {
   const handleGenerate = async (briefData: any) => {
     setIsGenerating(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/generate", briefData);
+      const res = await axios.post(`${API_URL}/generate`, briefData);
       setCurrentArticle({
         title: briefData.topic,
         content: res.data.article,
@@ -104,7 +107,7 @@ export default function Home() {
     if (!currentArticle) return;
     setIsSaving(true);
     try {
-      await axios.post("http://127.0.0.1:8000/articles", {
+      await axios.post(`${API_URL}/articles`, {
         id: currentArticle.id,
         title: currentArticle.title,
         content: currentArticle.content,
@@ -112,7 +115,7 @@ export default function Home() {
         status: status,
         sources: sources
       });
-      alert("✅ Saved successfully!");
+      alert("Saved successfully!");
       if (!currentArticle.id) setView("dashboard");
     } catch (error) {
       alert("Error saving.");
@@ -126,7 +129,7 @@ export default function Home() {
     setAnalyzing(true);
     setAnalysis("");
     try {
-      const res = await axios.post("http://127.0.0.1:8000/analyze-image", { image_url: imageUrl });
+      const res = await axios.post(`${API_URL}/analyze-image`, { image_url: imageUrl });
       setAnalysis(res.data.analysis);
     } catch (error) {
       alert("Error analyzing image. Ensure URL is valid.");
@@ -246,7 +249,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 2. AI VISION ANALYST CARD (Restored & Improved) */}
+              {/* 2. AI VISION ANALYST CARD */}
               <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-200">
                 <div className="flex items-center gap-2 mb-3">
                    <span className="text-lg">👁️</span>

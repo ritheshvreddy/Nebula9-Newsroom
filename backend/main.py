@@ -18,15 +18,19 @@ supabase: Client = create_client(url, key)
 
 app = FastAPI()
 
+# --- CHANGED: Use Environment Variable for Allowed Origins ---
+# Default to localhost for development if not set
+frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+allowed_origins = [frontend_url, "http://localhost:3000"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# --- CHANGED: Removed audience and tone ---
 class ArticleRequest(BaseModel):
     topic: str
     angle: str
@@ -56,7 +60,6 @@ def get_articles():
 @app.post("/generate")
 def generate_article(request: ArticleRequest):
     try:
-        # --- CHANGED: Hardcoded audience and tone here ---
         result = agent_app.invoke({
             "topic": request.topic,
             "angle": request.angle,
