@@ -46,7 +46,7 @@ class ImageAnalysisRequest(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"message": "Nebula9 Newsroom Backend is Live"}
+    return {"message": "AI Newsroom Backend is Live"}
 
 @app.get("/articles")
 def get_articles():

@@ -33,7 +33,7 @@ export default function Auth() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-lg border border-gray-200">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-blue-700">Nebula9 Newsroom</h1>
+          <h1 className="text-3xl font-bold text-blue-700">AI Newsroom</h1>
           <p className="mt-2 text-gray-500">Authorized Personnel Only</p>
         </div>
 

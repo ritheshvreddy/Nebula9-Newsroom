@@ -1,10 +1,9 @@
-
-# Nebula9 Newsroom
+# AI Newsroom
 
 An AI-powered newsroom application that helps journalists research, draft, and manage articles with human editorial control.
 
 ## Project Overview
-**Nebula9 Newsroom** is a full-stack AI application built to support modern journalism.
+**AI Newsroom** is a full-stack AI application built to support modern journalism.
 The system assists users in generating news articles by automating research, drafting, and image analysis, while keeping editors in control of the final content.
 
 Unlike a simple chatbot, this project follows a human-in-the-loop workflow, where AI supports the journalist instead of replacing editorial judgment.
